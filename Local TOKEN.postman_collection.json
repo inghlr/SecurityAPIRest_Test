@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "1e3f6a44-af6a-40e5-b41a-a9004bdc76fc",
+		"name": "Local TOKEN",
+		"description": "Para usar este collection se debe descargar el proyecto de git\n\nSe debe apuntar al port 3000",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12453825"
+	},
+	"item": [
+		{
+			"name": "01 Generate Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" pm.test(\"success\", function(){ \r",
+							"    var response = pm.response.json(),\r",
+							"        _token = response && response.token ? response.token : \"\";\r",
+							"\r",
+							"    pm.environment.set(\"api_local_token\", _token);\r",
+							" });"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_local_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/generateToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"generateToken"
+					]
+				},
+				"description": "Este endpoint es para generar el token y al mismo tiempo este token debe ser alamcenado a una variable de entorno , y esta variable debe ser enviada en los endpoints 02 y 03\n\nEl siguiente codigo debe agregarse en la parte de TEST del endpoint\n\n``` javascript\n pm.test(\"success\", function(){ \n    var response = pm.response.json(),\n        _token = response && response.token ? response.token : \"\";\n    pm.environment.set(\"api_local_token\", _token);\n });\n\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "02 Validate Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_local_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\" : \"{{api_local_token}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/validateToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"validateToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 validate Bearer Token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_local_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/validateBearerToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"validateBearerToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04 Validate User Pass",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{api_local_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\" : \"user\",\r\n    \"password\" : \"123qweasd\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/validateUserPass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"validateUserPass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05 Validate Basic Auth",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123qweasd",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/validateBasicAuth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"validateBasicAuth"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
